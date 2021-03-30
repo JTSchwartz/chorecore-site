@@ -1,24 +1,26 @@
 <template>
 	<v-app>
-			<Header/>
-			<v-sheet
-				id="scroll-target"
-				class="overflow-y-auto pt-16"
-				max-height="100vh"
-			>
+		<Header/>
+		<v-sheet
+			id="scroll-target"
+			class="overflow-y-auto pt-16"
+			max-height="100vh"
+		>
+			<v-container>
 				<router-view style="min-height: 100vh"></router-view>
-			</v-sheet>
+			</v-container>
+		</v-sheet>
 	</v-app>
 </template>
 
 <script>
-    import Header from "./components/Header";
+	import Header from "./components/Header";
 
-    export default {
-        components: {
-            Header
-        }
-    }
+	export default {
+		components: {
+			Header
+		}
+	}
 </script>
 
 <style>
@@ -71,5 +73,30 @@
 
 	body {
 		-ms-overflow-style: none;
+	}
+
+	code {
+		background-color: transparent !important;
+		padding: 0 !important;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		text-transform: capitalize;
+	}
+
+	.highlight {
+		background-color: #d2d200;
+		border-radius: 8px;
+		color: black;
+		margin-bottom: 8px;
+	}
+
+	h1.highlight,
+	h2.highlight,
+	h3.highlight,
+	h4.highlight,
+	h5.highlight,
+	h6.highlight {
+		text-align: center;
 	}
 </style>

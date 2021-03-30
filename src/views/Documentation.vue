@@ -1,11 +1,9 @@
 <template>
-	<v-container>
-		{{ $route.params.language }}
-		{{ $route.path }}
-		<component :is="'Paragraph'" :content="'const a = b'">
-
+	<div>
+		<component v-for="(item, index) in $data.langData[$route.params.language]" :key="index" :is="item.constructor.name" :content="item.content">
+			{{ typeof item}}
 		</component>
-	</v-container>
+	</div>
 </template>
 
 <script>

@@ -7,7 +7,7 @@
 		scroll-target="#scroll-target"
 	>
 		<link rel="stylesheet"
-			:href="isTrue(darkMode, 'https://unpkg.com/prismjs/themes/prism-tomorrow.css', 'https://unpkg.com/prismjs/themes/prism-solarizedlight.css')"/>
+			:href="isTrue($vuetify.theme.dark, 'https://unpkg.com/prismjs/themes/prism-tomorrow.css', 'https://unpkg.com/prismjs/themes/prism-solarizedlight.css')"/>
 
 		<v-app-bar-nav-icon>
 			<v-icon>
@@ -29,14 +29,12 @@
 		<v-btn
 			class="hide-on-scroll"
 			plain
+			@click="$router.push(`/about`)"
 		>
 			About
 		</v-btn>
 
-		<v-menu
-			left
-			bottom
-		>
+		<v-menu	offset-y>
 			<template v-slot:activator="{ on, attrs }">
 				<v-btn
 					class="hide-on-scroll"
@@ -63,7 +61,7 @@
 		<h3
 			v-if="$route.path.startsWith('/docs')"
 			class="hide-on-scroll"
-			:style="`color: var(--v-${isTrue(darkMode, 'success', 'primary')}-base)`"
+			:style="`color: var(--v-${isTrue($vuetify.theme.dark, 'success', 'primary')}-base)`"
 		>
 			{{ $route.params.language }}
 		</h3>
@@ -75,7 +73,7 @@
 			icon
 			@click="toggleDarkMode()"
 		>
-			<v-icon v-if="darkMode">
+			<v-icon v-if="$vuetify.theme.dark">
 				fas fa-moon-stars
 			</v-icon>
 			<v-icon v-else>
@@ -86,29 +84,26 @@
 </template>
 
 <script>
-    const {isTrue} = require("chorecore")
+	const {isTrue} = require("chorecore")
 
-    export default {
-        name: "Header",
-        data: () => ({
-            isTrue
-        }),
-        computed: {
-            darkMode: function () {
-                return this.$store.getters.darkMode
-            }
-        },
-        methods: {
-            toggleDarkMode: function () {
-                this.$store.dispatch("toggleDarkMode", !this.darkMode)
-            }
-        },
-		watch: {
-            darkMode: function (toggle) {
-                this.$vuetify.theme.dark = toggle;
+	export default {
+		name: "Header",
+		created() {
+			if (typeof (Storage) !== "undefined") {
+				if (localStorage.darkMode === "true") this.$vuetify.theme.dark = true
+				this.toggleDarkMode(localStorage.darkMode === "true")
+			}
+		},
+		data: () => ({
+			isTrue
+		}),
+		methods: {
+			toggleDarkMode: function (toggle = !this.$vuetify.theme.dark) {
+				if (typeof (Storage) !== "undefined") localStorage.darkMode = toggle
+				this.$vuetify.theme.dark = toggle
 			}
 		}
-    }
+	}
 </script>
 
 <style scoped>

@@ -12,14 +12,6 @@ Vue.config.productionTip = false
 
 Vue.use(VueBus);
 Vue.mixin({
-    created() {
-        if (typeof(Storage) !== "undefined") {
-            if (localStorage.darkMode === "true") {
-                store.dispatch("toggleDarkMode", localStorage.darkMode)
-                this.$vuetify.theme.dark = localStorage.darkMode;
-            }
-        }
-    },
     data: () => ({
         langData: languages
     }),

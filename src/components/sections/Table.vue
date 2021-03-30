@@ -1,5 +1,5 @@
 <template>
-	<table>
+	<v-simple-table>
 		<thead>
 		<tr>
 			<th v-for="header in content.headers" :key="header">
@@ -14,7 +14,7 @@
 			</td>
 		</tr>
 		</tbody>
-	</table>
+	</v-simple-table>
 </template>
 
 <script>

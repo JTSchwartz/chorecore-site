@@ -1,11 +1,9 @@
 <template>
 	<Prism
-		:language="$route.params.language.toLowerCase()"
+		:language="lang || $route.params.language.toLowerCase()"
 		class="code"
-		:style="`border-color: ${isTrue(darkMode, 'dim', 'light')}gray`"
-	>
-		{{ content }}
-	</Prism>
+		:style="`border-color: ${isTrue($vuetify.theme.dark, 'dim', 'light')}gray`"
+		:code="codeSnippet"/>
 </template>
 
 <script>
@@ -23,18 +21,16 @@
         components: {
             Prism
         },
-        props: ["content"],
+        props: ["content", "lang"],
         data: () => ({
             isTrue
         }),
         computed: {
-            darkMode: function () {
-                return this.$store.getters.darkMode
-            }
-        },
-        watch: {
-            darkMode: function (toggle) {
-                this.$vuetify.theme.dark = toggle;
+            codeSnippet: function () {
+				let arr = this.content.split("\n").map(str => str.replace(/^ */, ""))
+				arr.pop()
+				arr.shift()
+				return arr.join("\n")
             }
         }
     }
