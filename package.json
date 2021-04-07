@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
-    "chorecore": "^4.0.0",
+    "chorecore": "^4.0.1",
     "core-js": "^3.6.5",
     "prismjs": "^1.23.0",
     "vue": "^2.6.11",

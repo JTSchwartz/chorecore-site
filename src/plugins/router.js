@@ -19,6 +19,16 @@ const routes = [
     path: '/docs/:language',
     name: 'Documentation',
     component: () => import('../views/Documentation')
+  },
+  {
+    path: '/docs',
+    name: 'Choose A Language',
+    component: () => import('../views/ChooseLanguage')
+  },
+  {
+    path: '*',
+    name: 'Error',
+    component: () => import('../views/Error')
   }
 ]
 

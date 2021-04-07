@@ -5,7 +5,7 @@
 		>
 			<v-hover v-slot="{ hover }">
 				<v-img
-					:src="logos[lang.toLowerCase()]"
+					:src="$data.logos[lang]"
 					:class="{ 'on-hover': hover }"
 					class="image"
 					contain
@@ -20,15 +20,6 @@
 	export default {
 		name: "LangButton",
 		props: ["not", "anchor"],
-		data: () => ({
-			logos: {
-				java: require("@/assets/logos/java.svg"),
-				javascript: require("@/assets/logos/javascript.svg"),
-				kotlin: require("@/assets/logos/kotlin.svg"),
-				python: require("@/assets/logos/python.svg"),
-				typescript: require("@/assets/logos/typescript.svg")
-			}
-		}),
 		computed: {
 			languages: function () {
 				let arr = Object.keys(this.$data.langData)
@@ -48,9 +39,18 @@
 	}
 
 	.on-hover {
-		background-color: var(--v-font-base);
 		cursor: pointer;
-		-webkit-box-shadow: 0 0 15px 5px var(--v-font-base);
-		box-shadow: 0 0 5px 5px var(--v-font-base);
+	}
+
+	.theme--dark .on-hover {
+		background-color: var(--v-info-base);
+		-webkit-box-shadow: 0 0 15px 5px var(--v-info-base);
+		box-shadow: 0 0 5px 5px var(--v-info-base);
+	}
+
+	.theme--light .on-hover {
+		background-color: var(--v-success-base);
+		-webkit-box-shadow: 0 0 15px 5px var(--v-success-base);
+		box-shadow: 0 0 5px 5px var(--v-success-base);
 	}
 </style>

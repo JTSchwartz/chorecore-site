@@ -1,6 +1,6 @@
 <template>
 	<v-app-bar
-		:collapse-on-scroll="true"
+		:collapse-on-scroll="collapse"
 		color="accent"
 		dark
 		absolute
@@ -9,15 +9,23 @@
 		<link rel="stylesheet"
 			:href="isTrue($vuetify.theme.dark, 'https://unpkg.com/prismjs/themes/prism-tomorrow.css', 'https://unpkg.com/prismjs/themes/prism-solarizedlight.css')"/>
 
-		<v-app-bar-nav-icon>
-			<v-icon>
-				fas fa-bars
+		<v-app-bar-nav-icon
+			v-if="!atTop"
+			@click="collapse = !collapse"
+			id="collapse-icon"
+		>
+			<v-icon v-if="collapse">
+				fas fa-arrow-alt-from-left
+			</v-icon>
+			<v-icon v-else>
+				fas fa-arrow-alt-from-right
 			</v-icon>
 		</v-app-bar-nav-icon>
 
+		{{ $vuetify.breakpoint.name }}
 
 		<v-btn
-			class="hide-on-scroll"
+			class="hide-on-scroll hidden-sm-and-down"
 			plain
 			@click="$router.push('/')"
 		>
@@ -63,7 +71,7 @@
 			class="hide-on-scroll"
 			:style="`color: var(--v-${isTrue($vuetify.theme.dark, 'success', 'primary')}-base)`"
 		>
-			{{ $route.params.language }}
+			{{ docLang }}
 		</h3>
 
 		<v-spacer class="hide-on-scroll"></v-spacer>
@@ -88,6 +96,7 @@
 
 	export default {
 		name: "Header",
+		props: ["atTop"],
 		created() {
 			if (typeof (Storage) !== "undefined") {
 				if (localStorage.darkMode === "true") this.$vuetify.theme.dark = true
@@ -95,8 +104,14 @@
 			}
 		},
 		data: () => ({
+			collapse: true,
 			isTrue
 		}),
+		computed: {
+			docLang() {
+				return this.$store.getters.docLang;
+			}
+		},
 		methods: {
 			toggleDarkMode: function (toggle = !this.$vuetify.theme.dark) {
 				if (typeof (Storage) !== "undefined") localStorage.darkMode = toggle
@@ -107,12 +122,6 @@
 </script>
 
 <style scoped>
-
-	.v-icon {
-		height: 48px !important;
-		width: 48px !important;
-	}
-
 	.v-toolbar.v-toolbar--collapsed .hide-on-scroll {
 		display: none;
 	}

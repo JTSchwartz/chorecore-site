@@ -13,7 +13,14 @@ Vue.config.productionTip = false
 Vue.use(VueBus);
 Vue.mixin({
     data: () => ({
-        langData: languages
+        langData: languages,
+        logos: {
+            Java: require("@/assets/logos/java.svg"),
+            JavaScript: require("@/assets/logos/javascript.svg"),
+            Kotlin: require("@/assets/logos/kotlin.svg"),
+            Python: require("@/assets/logos/python.svg"),
+            TypeScript: require("@/assets/logos/typescript.svg")
+        }
     }),
 })
 

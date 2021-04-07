@@ -47,7 +47,8 @@
 			<v-col
 				v-for="(module, index) in Object.keys(modules)"
 				:key="index"
-				cols="4"
+				cols="12"
+				md="4"
 				align-self="stretch"
 			>
 				<v-card class="card-outer" :color="isTrue($vuetify.theme.dark, 'accent', 'info')">
@@ -110,6 +111,9 @@
 	export default {
 		name: "About",
 		components: {LangButton, Snippet},
+		created() {
+			document.title = "About - ChoreCore"
+		},
 		data: () => ({
 			isNull,
 			isTrue,

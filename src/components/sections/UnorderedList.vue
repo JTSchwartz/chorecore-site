@@ -1,5 +1,6 @@
 <template>
-	<v-list flat disabled>
+	<v-list disabled
+		flat>
 		<v-list-item-group>
 			<v-list-item
 				v-for="(item, i) in content"
@@ -8,7 +9,7 @@
 				<span style="margin-right: 6px">&bullet;</span>
 				<v-list-item-content>
 					<v-list-item-title>
-						{{ item }}
+						<span>{{ item }}</span>
 					</v-list-item-title>
 				</v-list-item-content>
 			</v-list-item>
@@ -17,11 +18,12 @@
 </template>
 
 <script>
-    export default {
-        name: "UnorderedList",
-        props: ["content"]
-    }
+	export default {
+		name: "UnorderedList",
+		props: ["content"]
+	}
 </script>
 
 <style scoped>
+
 </style>

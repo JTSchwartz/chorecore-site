@@ -8,7 +8,8 @@
 				<span style="margin-right: 6px">{{ i + 1 }}.)</span>
 				<v-list-item-content>
 					<v-list-item-title>
-						{{ item }}
+						<span v-if="typeof item === 'string'">{{ item }}</span>
+						<Snippet v-else :content="item.content" :inline="true"/>
 					</v-list-item-title>
 				</v-list-item-content>
 			</v-list-item>
@@ -17,9 +18,11 @@
 </template>
 
 <script>
-    export default {
+    import Snippet from "./Snippet";
+	export default {
         name: "OrderedList",
-        props: ["content"]
+		components: {Snippet},
+		props: ["content"]
     }
 </script>
 

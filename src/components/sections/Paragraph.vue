@@ -1,14 +1,23 @@
 <template>
-	<p>
-		{{ content }}
+	<p v-html="text">
 	</p>
 </template>
 
 <script>
-    export default {
-        name: "Paragraph",
-        props: ["content"]
-    }
+	const {replacementMap} = require("chorecore")
+
+	export default {
+		name: "Paragraph",
+		props: ["content"],
+		computed: {
+			text() {
+				return replacementMap(this.content, {
+					"//`": "</code>",
+					"/`": "<code>",
+				})
+			}
+		}
+	}
 </script>
 
 <style scoped>

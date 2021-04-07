@@ -1,29 +1,98 @@
 <template>
 	<v-app>
-		<Header/>
+		<Header :at-top="offsetTop === 0"/>
 		<v-sheet
 			id="scroll-target"
-			class="overflow-y-auto pt-16"
+			ref="scroll-sheet"
+			class="overflow-y-auto px-0"
 			max-height="100vh"
+			width="100vw"
+			v-scroll.self="onScroll"
 		>
+			<v-btn
+				v-if="offsetTop > 150"
+				class="fab"
+				fab
+				bottom
+				right
+				fixed
+				medium
+				href="#top"
+			>
+				<v-icon large>
+					fas fa-angle-up
+				</v-icon>
+			</v-btn>
+			<span id="top" style="height: 64px; display: block"></span>
 			<v-container>
-				<router-view style="min-height: 100vh"></router-view>
+				<router-view></router-view>
 			</v-container>
+			<Footer v-if="!['Error', 'Choose A Language'].includes($route.name)"/>
 		</v-sheet>
 	</v-app>
 </template>
 
 <script>
 	import Header from "./components/Header";
+	import Footer from "./components/Footer";
+	const {isTrue} = require("chorecore")
 
 	export default {
 		components: {
+			Footer,
 			Header
+		},
+		created() {
+			this.$bus.on("scroll", this.scrollTo)
+			this.$nextTick(() => {
+				this.scrollTo()
+			})
+		},
+		data: () => ({
+			offsetTop: 0,
+			isTrue
+		}),
+		methods: {
+			onScroll (e) {
+				this.offsetTop = e.target.scrollTop
+			},
+			scrollTo(target = this.$route.hash.substring(1)) {
+				if (target)	{
+					let stateCheck = setInterval(() => {
+						if (document.readyState === 'complete') {
+							clearInterval(stateCheck);
+							document.getElementById(target).scrollIntoView()
+							document.getElementById("scroll-target").scrollBy(0, -60)
+						}
+					}, 100);
+				}
+			}
+		},
+		watch: {
+			$route() {
+				this.scrollTo()
+			}
 		}
 	}
 </script>
 
 <style>
+	::-webkit-scrollbar {
+		width: 0;
+		height: 0;
+	}
+	::-webkit-scrollbar-thumb {
+		background: transparent;
+		border-radius: 0;
+	}
+	::-webkit-scrollbar-thumb:hover{
+		background: transparent;
+	}
+	::-webkit-scrollbar-track{
+		background: transparent;
+		border-radius: 0;
+	}
+
 	* {
 		overflow-x: hidden;
 	}
@@ -33,6 +102,11 @@
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 		color: #2c3e50;
+		width: 100vw;
+	}
+
+	.theme--dark#app {
+		background-color: #1e1e1e !important;
 	}
 
 	#nav {
@@ -48,29 +122,6 @@
 		color: #42b983;
 	}
 
-	::-webkit-scrollbar {
-		width: 5px;
-		height: 10px;
-	}
-
-	::-webkit-scrollbar-thumb {
-		border-radius: 5px;
-		background: transparent;
-	}
-
-	::-webkit-scrollbar-thumb:hover {
-		background: transparent;
-	}
-
-	::-webkit-scrollbar-track {
-		border-radius: 5px;
-		background: transparent;
-	}
-
-	body::-webkit-scrollbar {
-		display: none;
-	}
-
 	body {
 		-ms-overflow-style: none;
 	}
@@ -78,10 +129,6 @@
 	code {
 		background-color: transparent !important;
 		padding: 0 !important;
-	}
-
-	h1, h2, h3, h4, h5, h6 {
-		text-transform: capitalize;
 	}
 
 	.highlight {
@@ -98,5 +145,20 @@
 	h5.highlight,
 	h6.highlight {
 		text-align: center;
+	}
+
+	.v-icon {
+		height: 48px !important;
+		width: 48px !important;
+	}
+
+	.theme--dark .fab {
+		background-color: var(--v-accent-base) !important;
+		color: var(--v-success-base) !important;
+	}
+
+	.theme--light .fab {
+		background-color: var(--v-anchor-base) !important;
+		color: var(--v-success-base) !important;
 	}
 </style>
