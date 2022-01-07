@@ -15,7 +15,7 @@ export default new Vuex.Store({
 	actions: {
 		setDocLanguage(context, keyword) {
 			return new Promise((resolve => {
-				let lang = null
+				let lang;
 
 				switch (keyword.toLowerCase()) {
 					case 'java':

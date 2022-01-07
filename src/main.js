@@ -6,8 +6,9 @@ import VueBus from 'vue-bus';
 import vuetify from './plugins/vuetify';
 import store from './plugins/vuex'
 
-const { languages } = require("./assets/languages")
+const { languages } = require("./languages")
 
+Vue.config.devtools = true
 Vue.config.productionTip = false
 
 Vue.use(VueBus);

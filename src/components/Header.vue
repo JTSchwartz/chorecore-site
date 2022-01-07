@@ -22,7 +22,7 @@
 			</v-icon>
 		</v-app-bar-nav-icon>
 
-		{{ $vuetify.breakpoint.name }}
+		<!--{{ $vuetify.breakpoint.name }}-->
 
 		<v-btn
 			class="hide-on-scroll hidden-sm-and-down"

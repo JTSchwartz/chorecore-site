@@ -7,7 +7,7 @@
 				:is="item.constructor.name"
 				:content="item.content">
 			</component>
-			<h6 id="bottom"></h6>
+			<!--<h6 id="bottom"></h6>-->
 		</v-col>
 		<v-col
 			v-if="$vuetify.breakpoint.mdAndUp"

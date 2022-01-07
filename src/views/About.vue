@@ -106,7 +106,7 @@
 	import Snippet from "../components/sections/Snippet";
 	import LangButton from "../components/LangButton";
 	const {isTrue, isNull} = require("chorecore")
-	const { modules } = require("../assets/modules")
+	const { modules } = require("../modules")
 
 	export default {
 		name: "About",
@@ -122,7 +122,7 @@
 				Java: {
 					status: "Under Development",
 					repo: "https://github.com/JTSchwartz/chorecore-kt",
-					pkg: ["Maven", null]
+					pkg: ["Maven", "https://search.maven.org/artifact/com.jtschwartz/chorecore"]
 				},
 				JavaScript: {
 					status: "In Production",
@@ -132,12 +132,12 @@
 				Kotlin: {
 					status: "Under Development",
 					repo: "https://github.com/JTSchwartz/chorecore-kt",
-					pkg: ["Maven", null]
+					pkg: ["Maven", "https://search.maven.org/artifact/com.jtschwartz/chorecore"]
 				},
 				Python: {
-					status: "Not Yet Started",
-						repo: null,
-						pkg: ["Pip", null]
+					status: "Under Development",
+						repo: "https://github.com/JTSchwartz/chorecore-py",
+						pkg: ["Pip", "https://pypi.org/project/chorecore/"]
 				},
 				TypeScript: {
 					status: "In Production",

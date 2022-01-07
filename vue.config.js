@@ -1,3 +1,4 @@
 module.exports = {
-	filenameHashing: false
+	filenameHashing: false,
+	chainWebpack: config => config.optimization.minimize(false)
 }
