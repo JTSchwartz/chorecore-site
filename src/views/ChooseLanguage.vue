@@ -13,7 +13,7 @@
 				>
 					<p class="text-h4 text-center">{{ lang }}</p>
 					<v-img
-						:src="$data.logos[lang]"
+						:src="$data.languages[lang].logos"
 						contain
 						height="10vh"
 					/>

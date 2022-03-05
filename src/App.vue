@@ -23,7 +23,8 @@
 					fas fa-angle-up
 				</v-icon>
 			</v-btn>
-			<span id="top" style="height: 64px; display: block"></span>
+			<span id="top"
+				style="height: 64px; display: block"></span>
 			<v-container>
 				<router-view></router-view>
 			</v-container>
@@ -35,6 +36,7 @@
 <script>
 	import Header from "./components/Header";
 	import Footer from "./components/Footer";
+
 	const {isTrue} = require("chorecore")
 
 	export default {
@@ -53,19 +55,18 @@
 			isTrue
 		}),
 		methods: {
-			onScroll (e) {
+			onScroll(e) {
 				this.offsetTop = e.target.scrollTop
 			},
 			scrollTo(target = this.$route.hash.substring(1)) {
-				if (target)	{
-					let stateCheck = setInterval(() => {
-						if (document.readyState === 'complete') {
-							clearInterval(stateCheck);
-							document.getElementById(target).scrollIntoView()
-							document.getElementById("scroll-target").scrollBy(0, -60)
-						}
-					}, 100);
-				}
+				let stateCheck = setInterval(() => {
+					if (document.readyState === 'complete') {
+						clearInterval(stateCheck);
+
+						document.getElementById(target ? target : "top").scrollIntoView()
+						document.getElementById("scroll-target").scrollBy(0, -60)
+					}
+				}, 100);
 			}
 		},
 		watch: {
@@ -81,14 +82,17 @@
 		width: 0;
 		height: 0;
 	}
+
 	::-webkit-scrollbar-thumb {
 		background: transparent;
 		border-radius: 0;
 	}
-	::-webkit-scrollbar-thumb:hover{
+
+	::-webkit-scrollbar-thumb:hover {
 		background: transparent;
 	}
-	::-webkit-scrollbar-track{
+
+	::-webkit-scrollbar-track {
 		background: transparent;
 		border-radius: 0;
 	}

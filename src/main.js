@@ -6,28 +6,25 @@ import VueBus from 'vue-bus';
 import vuetify from './plugins/vuetify';
 import store from './plugins/vuex'
 
-const { languages } = require("./languages")
-
 Vue.config.devtools = true
 Vue.config.productionTip = false
 
 Vue.use(VueBus);
 Vue.mixin({
-    data: () => ({
-        langData: languages,
-        logos: {
-            Java: require("@/assets/logos/java.svg"),
-            JavaScript: require("@/assets/logos/javascript.svg"),
-            Kotlin: require("@/assets/logos/kotlin.svg"),
-            Python: require("@/assets/logos/python.svg"),
-            TypeScript: require("@/assets/logos/typescript.svg")
-        }
-    }),
+	data: () => ({
+		languages: [
+            {name: "Java", logo: require("@/assets/logos/java.svg")},
+            {name: "JavaScript", logo: require("@/assets/logos/javascript.svg")},
+            {name: "Kotlin", logo: require("@/assets/logos/kotlin.svg")},
+            {name: "Python", logo: require("@/assets/logos/python.svg")},
+            {name: "TypeScript", logo: require("@/assets/logos/typescript.svg")}
+		]
+	}),
 })
 
 new Vue({
-    vuetify,
-    router,
-    store,
-    render: h => h(App)
+	vuetify,
+	router,
+	store,
+	render: h => h(App)
 }).$mount('#app')

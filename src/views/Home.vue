@@ -68,50 +68,6 @@
 			<p class="text-center mt-12 mt-md-16 text-body-1 font-italic">
 				Even this page utilizes ChoreCore, every single page relies on it.
 			</p>
-			<div class="pt-16 mt-md-16 overflow-hidden">
-				<p class="text-h5 text-md-h3 ml-md-16 text-right">What We Have To Offer</p>
-				<br v-if="$vuetify.breakpoint.mdAndUp"/>
-				<br v-if="$vuetify.breakpoint.mdAndUp"/>
-				<hr
-					v-if="$vuetify.breakpoint.smAndDown"
-					class="mb-12"
-				/>
-				<v-expansion-panels
-					id="accordion-wrapper"
-					class="ma-5 px-3"
-					inset
-				>
-					<v-expansion-panel
-						v-for="lang in Object.keys($data.langData)"
-						:key="lang"
-						class="language-card my-3">
-						<v-expansion-panel-header
-							class="text-h4"
-						>
-							{{ lang }}
-						</v-expansion-panel-header>
-						<v-expansion-panel-content>
-							<v-list>
-								<v-list-item-group>
-									<v-list-item
-										v-for="(item, i) in headers(lang)"
-										:key="i"
-										@click="$router.push(`/docs/${lang}#${item.content.anchor}`)"
-									>
-										<v-list-item-content>
-											<component
-												:is="item.content.level === 1 ? 'v-list-item-title' : 'v-list-item-subtitle'"
-											>
-												{{ item.content.header }}
-											</component>
-										</v-list-item-content>
-									</v-list-item>
-								</v-list-item-group>
-							</v-list>
-						</v-expansion-panel-content>
-					</v-expansion-panel>
-				</v-expansion-panels>
-			</div>
 		</div>
 	</div>
 </template>
@@ -168,5 +124,24 @@
 
 	.v-expansion-panels {
 		z-index: 0 !important;
+	}
+
+	.inline-justify {
+		text-align: justify;
+		width: 100%;
+	}
+	.inline-justify > div {
+		width: 500px; /* Declare your value. Can be in relative units. */
+		display: inline-block;
+		vertical-align: top;
+
+		/* IE fix. */
+		*display: inline;
+		zoom: 1;
+	}
+	.inline-justify:after {
+		content: "";
+		width: 100%;
+		display: inline-block;
 	}
 </style>

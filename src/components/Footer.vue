@@ -38,7 +38,7 @@
 						<v-col>
 							<strong>Languages</strong><br/>
 							<div
-								v-for="lang in Object.keys($data.langData)"
+								v-for="lang in this.languages.map(entry => entry.name)"
 								:key="lang"
 							>
 								<a :href="`/docs/${lang}`">

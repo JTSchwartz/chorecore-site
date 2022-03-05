@@ -30,7 +30,7 @@
 						>
 							<v-list-item-avatar>
 								<v-img
-									:src="$data.logos[lang]"
+									:src="$data.languages[lang].logo"
 									class="image"
 									contain
 								/>

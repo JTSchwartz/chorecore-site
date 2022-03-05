@@ -5,11 +5,11 @@
 		>
 			<v-hover v-slot="{ hover }">
 				<v-img
-					:src="$data.logos[lang]"
+					:src="lang.logo"
 					:class="{ 'on-hover': hover }"
 					class="image"
 					contain
-					@click="$router.push(`/docs/${lang}#${anchor}`)"
+					@click="$router.push(`/docs/${lang.name}#${anchor}`)"
 				/>
 			</v-hover>
 		</v-col>
@@ -22,8 +22,8 @@
 		props: ["not", "anchor"],
 		computed: {
 			languages: function () {
-				let arr = Object.keys(this.$data.langData)
-				if (this.not) arr = arr.filter(l => !this.not?.includes(l.toLowerCase()))
+				let arr = this.$data.languages
+				if (this.not) arr = arr.filter(l => !this.not?.includes(l.name.toLowerCase()))
 				return arr
 			}
 		}

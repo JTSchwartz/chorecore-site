@@ -1,27 +1,26 @@
 <template>
 	<div>
-		<h1 class="highlight">Overall ChoreCore Is in an Alpha state! <a href="#status">Check the status</a></h1>
 		<h2>What is it?</h2>
 		<p>
 			ChoreCore is a multi-language utility library built to make every developer's life easier. We all know a plethora of functionalities we wish were built into languages just
 			because of how often we use them, but instead we have to copy the same functions over and over again between projects. Take the following lines of code as an example:
 		</p>
-		<Snippet class="mb-4" :lang="'javascript'"
-			:content="`
+		<pre><code>
 		const MILLISECOND = 1
-		const SECOND =  1000
+		const SECOND = 1000
 		const MINUTE = 60000
 		const HOUR = 3600000
 		const DAY = 86400000
 		const WEEK = 604800000
 		// Or
 		const MILLISECOND = 1
-		const SECOND =  1000 * MILLISECOND
+		const SECOND = 1000 * MILLISECOND
 		const MINUTE = 60 * SECOND
 		const HOUR = 60 * MINUTE
 		const DAY = 24 * HOUR
 		const WEEK = 7 * DAY
-		`"/>
+		</code></pre>
+		<br/>
 		<p>
 			This is in JavaScript, but you would be hard pressed to find a developer who has not written these exact lines of code before, the the equivalent in whatever language they were
 			using; so much so that I imagine it is useless to point out that those constants are calculations of each unit it milliseconds (Sure, adding milliseconds to that list is
@@ -51,7 +50,8 @@
 				md="4"
 				align-self="stretch"
 			>
-				<v-card class="card-outer" :color="isTrue($vuetify.theme.dark, 'accent', 'info')">
+				<v-card class="card-outer"
+					:color="isTrue($vuetify.theme.dark, 'accent', 'info')">
 					<v-card-title>
 						{{ module }}
 					</v-card-title>
@@ -72,27 +72,23 @@
 			<thead>
 			<tr>
 				<th>Language</th>
-				<th>Status</th>
 				<th>Repository Link</th>
 				<th>Package Link</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr
-				v-for="lang in Object.keys($data.langData)"
-				:key="lang"
+				v-for="lang in status"
+				:key="lang.name"
 			>
-				<td>{{ lang }}</td>
-				<td>{{ status[lang].status }}</td>
+				<td>{{ lang.name }}</td>
 				<td>
-					<a :href="status[lang].repo" target="_blank">
-						{{ isNull(status[lang].repo, "Unavailable - ") }}GitHub
-					</a>
+					<a :href="lang.repo"
+						target="_blank">GitHub</a>
 				</td>
 				<td>
-					<a :href="status[lang].pkg[1]" target="_blank">
-						{{ isNull(status[lang].pkg[1], "Unavailable - ") }}{{ status[lang].pkg[0] }}
-					</a>
+					<a :href="lang.pkg.url"
+						target="_blank">{{ lang.pkg.name }}</a>
 				</td>
 			</tr>
 			</tbody>
@@ -103,14 +99,14 @@
 </template>
 
 <script>
-	import Snippet from "../components/sections/Snippet";
 	import LangButton from "../components/LangButton";
+	
 	const {isTrue, isNull} = require("chorecore")
-	const { modules } = require("../modules")
-
+	const {modules} = require("@/assets/modules")
+	
 	export default {
 		name: "About",
-		components: {LangButton, Snippet},
+		components: {LangButton},
 		created() {
 			document.title = "About - ChoreCore"
 		},
@@ -118,38 +114,39 @@
 			isNull,
 			isTrue,
 			modules,
-			status: {
-				Java: {
-					status: "Under Development",
+			status: [
+				{
+					name: "Java & Kotlin",
+					status: "In Production",
 					repo: "https://github.com/JTSchwartz/chorecore-kt",
-					pkg: ["Maven", "https://search.maven.org/artifact/com.jtschwartz/chorecore"]
+					pkg: {name: "Maven", url: "https://search.maven.org/artifact/com.jtschwartz/chorecore"}
 				},
-				JavaScript: {
+				{
+					name: "JavaScript & TypeScript",
 					status: "In Production",
 					repo: "https://github.com/JTSchwartz/chorecore-ts",
-					pkg: ["NPM", "https://www.npmjs.com/package/chorecore"]
+					pkg: {name: "NPM", url: "https://www.npmjs.com/package/chorecore"}
 				},
-				Kotlin: {
-					status: "Under Development",
-					repo: "https://github.com/JTSchwartz/chorecore-kt",
-					pkg: ["Maven", "https://search.maven.org/artifact/com.jtschwartz/chorecore"]
-				},
-				Python: {
-					status: "Under Development",
-						repo: "https://github.com/JTSchwartz/chorecore-py",
-						pkg: ["Pip", "https://pypi.org/project/chorecore/"]
-				},
-				TypeScript: {
+				{
+					name: "Python",
 					status: "In Production",
-						repo: "https://github.com/JTSchwartz/chorecore-ts",
-						pkg: ["NPM", "https://www.npmjs.com/package/chorecore"]
-				},
-			}
+					repo: "https://github.com/JTSchwartz/chorecore-py",
+					pkg: {name: "Pip", url: "https://pypi.org/project/chorecore/"}
+				}
+			]
 		})
 	}
 </script>
 
 <style scoped>
+	pre code {
+		border: 1px solid var(--v-anchor-base);
+		background: var(--v-info-base) !important;
+		color: black !important;
+		display: inline-block;
+		padding: 2px 8px !important;
+	}
+
 	a:not([href]) {
 		color: var(--v-font-base);
 		cursor: grab;

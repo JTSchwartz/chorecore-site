@@ -1,65 +1,17 @@
 <template>
-	<v-row>
-		<v-col>
-			<h1 class="mb-4">{{ docLang }} Documentation</h1>
-			<component v-for="(item, index) in $data.langData[docLang]"
-				:key="index"
-				:is="item.constructor.name"
-				:content="item.content">
-			</component>
-			<!--<h6 id="bottom"></h6>-->
-		</v-col>
-		<v-col
-			v-if="$vuetify.breakpoint.mdAndUp"
-			cols="2"
-			class="side-nav"
-		>
-			<v-list flat>
-				<v-list-item-group>
-					<v-list-item
-						v-for="(item, i) in headers"
-						:key="i"
-					>
-						<v-list-item-content>
-							<component :is="item.content.level === 1 ? 'v-list-item-title' : 'v-list-item-subtitle'" @click="$router.push(`#${item.content.anchor}`)">
-								{{ item.content.header }}
-							</component>
-						</v-list-item-content>
-					</v-list-item>
-				</v-list-item-group>
-			</v-list>
-		</v-col>
-	</v-row>
+	<component :is="documentation"/>
 </template>
 
 <script>
-	import CodeHeading from "../components/sections/CodeHeading";
-	import CodeList from "../components/sections/CodeList";
-	import Heading from "../components/sections/Heading";
-	import OrderedList from "../components/sections/OrderedList";
-	import Paragraph from "../components/sections/Paragraph";
-	import Snippet from "../components/sections/Snippet";
-	import Table from "../components/sections/Table";
-	import UnorderedList from "../components/sections/UnorderedList";
-
 	export default {
 		name: "Documentation",
 		created() {
 			this.setLanguage()
 		},
-		components: {
-			/* eslint vue/no-unused-components: 0 */
-			CodeHeading,
-			CodeList,
-			Heading,
-			OrderedList,
-			Paragraph,
-			Snippet,
-			Table,
-			UnorderedList
-		},
+		components: {},
 		data: () => ({
-			docLang: ''
+			docLang: '',
+			documentation: null
 		}),
 		methods: {
 			setLanguage() {
@@ -67,34 +19,73 @@
 					if (!lang) this.$router.push("/docs")
 					this.docLang = lang
 					document.title = `${lang} Documentation - ChoreCore`
-				})
 
+					if (lang === "TypeScript") lang = "JavaScript"
+					const markdown = require(`@/assets/docs/${lang}.md`)
+					this.documentation = markdown.vue.component
+				})
 			}
 		},
-		computed: {
-			headers() {
-				if (!this.$data.langData[this.docLang]) return
-				return this.$data.langData[this.docLang].filter(item => item.constructor.name === "Heading" && item.content.anchor)
-			}
-		},
-		watch:{
-			$route (){
+		watch: {
+			$route() {
 				this.setLanguage()
 			}
 		}
 	}
 </script>
 
-<style scoped>
+<style>
+	h1, h2, h3, h5, h6 {
+		margin: 16px 0;
+	}
+
 	h1 {
 		text-decoration: underline;
 	}
 
-	hr {
-		margin-bottom: 16px;
+	h4:not(li h4) {
+		margin: 16px 0;
 	}
 
-	code {
-		white-space: nowrap !important;
+	h4 code, pre code {
+		border: 1px solid var(--v-anchor-base);
+		background: var(--v-info-base) !important;
+		color: black !important;
+		padding: 2px 4px !important;
+		display: inline-block;
+	}
+
+	pre code {
+		padding: 2px 8px !important;
+	}
+
+	table {
+		border-spacing: 0 !important;
+		margin-bottom: 32px;
+		width: 100%;
+	}
+
+	th {
+		border-bottom: 1px solid var(--v-font-darken4);
+	}
+
+	tr:nth-child(2n) {
+		background: var(--v-primary-lighten4);
+	}
+
+	td {
+		padding: 2px 4px 1px 6px;
+	}
+
+	p {
+		padding-left: 1em;
+	}
+
+	ul, li {
+		overflow-x: visible;
+	}
+
+	li h4 code {
+		transform: translateY(25%);
 	}
 </style>

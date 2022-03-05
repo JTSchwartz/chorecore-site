@@ -56,7 +56,7 @@
 
 			<v-list>
 				<v-list-item
-					v-for="lang in Object.keys($data.langData)"
+					v-for="lang in this.languages.map(entry => entry.name)"
 					:key="lang"
 					@click="$router.push(`/docs/${lang}`)"
 				>
